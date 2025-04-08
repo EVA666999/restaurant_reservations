@@ -1,10 +1,11 @@
-from fastapi import FastAPI
-import sys
 import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from routers import tables, reservations
+import sys
 
+from fastapi import FastAPI
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import uvicorn
+from routers import reservations, tables
 
 app = FastAPI()
 

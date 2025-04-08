@@ -1,2 +1,2 @@
-from .tables import Tables, TableLocation
 from .reservations import Reservations
+from .tables import TableLocation, Tables
