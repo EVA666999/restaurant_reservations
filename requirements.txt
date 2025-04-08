@@ -1,0 +1,19 @@
+fastapi
+uvicorn[standard]
+jinja2
+pydantic[email]
+python-multipart
+SQLAlchemy
+alembic
+psycopg2-binary
+slugify
+asyncpg
+bcrypt==4.0.1
+passlib
+PyJWT
+loguru
+# Celery
+# redis>=4.5.4
+# gevent
+# vine
+# cryptography
