@@ -1,6 +1,6 @@
 fastapi
 uvicorn[standard]
-jinja2
+# jinja2
 pydantic[email]
 python-multipart
 SQLAlchemy
@@ -10,7 +10,7 @@ slugify
 asyncpg
 bcrypt==4.0.1
 passlib
-PyJWT
+# PyJWT
 loguru
 fastapi-limiter
 pytest
