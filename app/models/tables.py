@@ -1,16 +1,19 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import Integer, String, Enum
 import enum
-from typing import List
+from typing import List, TYPE_CHECKING
 from database.db import Base
+
+if TYPE_CHECKING:
+    from .reservations import Reservations
 
 class TableLocation(enum.Enum):
     """Table locations"""
-    MAIN_HALL = "Main Hall"
-    TERRACE = "Terrace"
-    GARDEN = "Garden"
-    PRIVATE_ROOM = "Private Room"
-    BAR_AREA = "Bar Area"
+    MAIN_HALL = "Главный зал"
+    TERRACE = "Терраса"
+    GARDEN = "Сад"
+    PRIVATE_ROOM = "Приватная комната"
+    BAR_AREA = "Барная зона"
 
 class Tables(Base):
     __tablename__ = "tables"

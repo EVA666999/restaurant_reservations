@@ -3,9 +3,8 @@ from sqlalchemy.orm import Session
 from typing import Annotated
 from sqlalchemy import delete, insert, select, update
 from slugify import slugify
-from fastapi_limiter.depends import RateLimiter
 from schemas import CreateTable
-from models.tables import Tables
+from models.tables import TableLocation, Tables
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.db_depends import get_db
@@ -15,7 +14,13 @@ router = APIRouter(prefix='/tables', tags=['tables'])
 
 @router.get('/', status_code=status.HTTP_200_OK)
 async def get_all_tables(db: Annotated[AsyncSession, Depends(get_db)]):
-    tables = db.scalars(select(Tables)).all()
+    result = await db.scalars(select(Tables))
+    tables = result.all()
+    if not tables:
+         raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail='There is no table found'
+            )
     return tables
 
 @router.post(
@@ -28,16 +33,28 @@ async def create_table(
     create_table: CreateTable):
     """Создает новый стол"""
     new_table = Tables(
-        name = create_table.name,
-        seats = create_table.seats,
-        location = create_table.location
+        name=create_table.name,
+        seats=create_table.seats,
+        location=TableLocation(create_table.location.value)
     )
 
     db.add(new_table)
     await db.commit()
     await db.refresh(new_table)
 
-    response = {"detail": "Table created successfully", "id": new_table.id}
+    return {"detail": "Table created successfully", "id": new_table.id}
 
-
-    return response
+@router.delete('/{table_id}', status_code=status.HTTP_200_OK)
+async def delete_table(db: Annotated[AsyncSession, Depends(get_db)], table_id: int):
+        table = await db.scalar(select(Tables).where(Tables.id == table_id))
+        if table is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail='There is no table found'
+            )
+        await db.delete(table)
+        await db.commit()
+        return {
+            'status_code': status.HTTP_200_OK,
+            'transaction': 'Table delete is successful'
+        }

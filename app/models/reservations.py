@@ -1,8 +1,12 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, Integer, String, DateTime
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from database.db import Base
+
+if TYPE_CHECKING:
+    from .tables import Tables
 
 class Reservations(Base):
     __tablename__ = 'reservations'
