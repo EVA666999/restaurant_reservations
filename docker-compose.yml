@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   web:
     build: .
@@ -15,7 +13,7 @@ services:
       - DB_PORT=5432
     volumes:
       - ./app:/app
-    command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    command: bash -c "sed -i 's|sqlalchemy.url = postgresql://postgres:Kohkau11999@localhost:5432/test_case_db_1|sqlalchemy.url = postgresql://postgres:Kohkau11999@db:5432/test_case_db_1|g' alembic.ini && alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
     restart: unless-stopped
 
   db:
