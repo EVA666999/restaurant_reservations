@@ -32,25 +32,26 @@ API для управления бронированием столов в ре�
    git clone https://github.com/EVA666999/restaurant_reservations/
    cd app
    ```
-## Создайте файл .env с переменными:
+### Создайте файл .env с переменными:
 POSTGRES_DB=test_case_db_1
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=ваш_пароль
 DB_HOST=postgres
 DB_PORT=5432
-##Для миграций выполните:
+
+### Для миграций выполните:
 alembic init alembic
-##Настройте alembic.sqlalchemy.url = postgresql://postgres:password@localhost:5432/name_db
+### Настройте alembic.sqlalchemy.url = postgresql://postgres:password@localhost:5432/name_db
 ini:
-##Примените миграции:
+### Примените миграции:
 alembic revision --autogenerate -m "Initial migration"
 alembic upgrade head
-##Запустите приложение с Docker:
+### Запустите приложение с Docker:
 docker compose up --build
-##API будет доступно по адресу:
+### API будет доступно по адресу:
 http://localhost:8000
 
-##Особенности
+### Особенности
 
 Поддержка различных расположений столов.
 Автоматическая проверка конфликта бронирований.
