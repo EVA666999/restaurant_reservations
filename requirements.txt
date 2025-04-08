@@ -13,6 +13,8 @@ passlib
 PyJWT
 loguru
 fastapi-limiter
+pytest
+pytest-asyncio
 # Celery
 # redis>=4.5.4
 # gevent
