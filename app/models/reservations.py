@@ -1,9 +1,8 @@
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import ForeignKey, Integer, String
-from sqlalchemy import DateTime
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import ForeignKey, Integer, String, DateTime
 from datetime import datetime
 
-from app.database.db import Base
+from database.db import Base
 
 class Reservations(Base):
     __tablename__ = 'reservations'
@@ -13,3 +12,8 @@ class Reservations(Base):
     table_id: Mapped[int] = mapped_column(ForeignKey("tables.id", ondelete="CASCADE"))
     reservation_time: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     duration_minutes: Mapped[int] = mapped_column(Integer, nullable=False)
+    
+    table: Mapped["Tables"] = relationship("Tables", back_populates="reservations")
+
+    def __repr__(self):
+        return f"<Reservation(id={self.id}, customer_name='{self.customer_name}', table_id={self.table_id}, time={self.reservation_time})>"
